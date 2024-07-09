@@ -60,13 +60,13 @@
 
 
             // Get the input text
-            //const inputText = document.getElementById('inputText').value;
-            //const inputText2 = document.getElementById('inputText2').value;
+            const inputText = document.getElementById('inputText').value;
+            const inputText2 = document.getElementById('inputText2').value;
             //E014944637VNM9510261F3403129036195000938<<46
             //const inputText = "IDVNM2002276221001200227622<<2";
             //const inputText2 = "0011020M2511029VNM<<<<<<<<<<<8";
-            const inputText =  "I<YTOD231458907<<<<<<<<<<<<<<<";
-            const inputText2 = "3407127M9507122YTO<<<<<<<<<<<2";
+            //const inputText =  "I<YTOD231458907<<<<<<<<<<<<<<<";
+            //const inputText2 = "3407127M9507122YTO<<<<<<<<<<<2";
 
             if (inputText.length !== 30) {
                 alert('Input must be exactly 30 characters long.');
@@ -143,7 +143,7 @@
             let text = getText(inputText, 6, 30) + "" + getText(inputText2, 1, 7) + "" + getText(inputText2, 9, 15) + getText(inputText2, 19, 29);
             const cleanedText = text.replace(/</g, '');
             combine.textContent = text + "    --> " + checkDigitTd3(text);
-            combine_clean.textContent = cleanedText + "    --> " + checkDigitTd3(cleanedText);
+            //combine_clean.textContent = cleanedText + "    --> " + checkDigitTd3(cleanedText);
 
             
             console.log(checkDigitTd3(inputText, 6, 30))
