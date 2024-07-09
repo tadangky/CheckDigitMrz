@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+            min-width: 20px;
+            padding: 5px;
+        }
+
+        .red-text {
+            color: red;
+        }
+
+        #inputText, #inputText2 {
+            width: 420px; /* Adjust width as needed */
+            font-size: 14px; /* Set font size */
+        }
+    </style>
+</head>
+<body>
+    <h1>TD1</h1>
+    <form>
+        <input type="text" id="inputText" placeholder="Row 1"><br/><br/>
+        <input type="text" id="inputText2" placeholder="Row 2">
+        <button type="button" onclick="generateTable()">Generate Table</button>
+        <button type="button" onclick="clearInput()">Clear</button>
+    </form>
+
+    <div id="tableContainer"></div>
+    <br/>
+    <div id="DocNumber"></div>
+    <div id="Optional"></div>
+    <div id="dob"></div>
+    <div id="gender"></div>
+    <div id="doe"></div>
+    <div id="Nationality"></div>
+    <div id="Optional2"></div>
+
+
+    <br/>
+    <div id="combine_title"></div>
+    <div id="combine"></div>
+    <div id="combine_clean"></div>
+
+    <script>
+        function generateTable() {
+            //IDVNM2002276221001200227622<<2
+            //0011020M2511029VNM<<<<<<<<<<<8
+            //NGUYEN<<THANH<DONG<<<<<<<<<<<<
+
+
+            // Get the input text
+            //const inputText = document.getElementById('inputText').value;
+            //const inputText2 = document.getElementById('inputText2').value;
+            //E014944637VNM9510261F3403129036195000938<<46
+            //const inputText = "IDVNM2002276221001200227622<<2";
+            //const inputText2 = "0011020M2511029VNM<<<<<<<<<<<8";
+            const inputText =  "I<YTOD231458907<<<<<<<<<<<<<<<";
+            const inputText2 = "3407127M9507122YTO<<<<<<<<<<<2";
+
+            if (inputText.length !== 30) {
+                alert('Input must be exactly 30 characters long.');
+                return;
+            }
+            
+            // Get the table container
+            const tableContainer = document.getElementById('tableContainer');
+            
+            // Clear any previous table
+            tableContainer.innerHTML = '';
+            
+            // Create the table element
+            const table = document.createElement('table');
+            
+            // Create two rows
+            const row1 = document.createElement('tr');
+            const row2 = document.createElement('tr');
+            const row3 = document.createElement('tr');
+            
+            // Iterate over the input text and create cells
+            for (let i = 0; i < inputText.length; i++) {
+                const cell1 = document.createElement('td');
+                const cell2 = document.createElement('td');
+                const cell3 = document.createElement('td');
+                cell1.textContent = i + 1; // Number starting from 1
+                cell2.textContent = inputText[i]; // Corresponding character
+                cell3.textContent = inputText2[i];
+                row1.appendChild(cell1);
+                row2.appendChild(cell2);
+                row3.appendChild(cell3);
+
+                if (i === 14) {
+                    cell2.classList.add('red-text'); // Apply red text color
+                }
+
+                if (i === 6 || i === 14 || i === 29) {
+                    cell3.classList.add('red-text'); 
+                }
+            }
+            
+            // Append rows to the table
+            table.appendChild(row1);
+            table.appendChild(row2);
+            table.appendChild(row3);
+            
+            // Append table to the container
+            tableContainer.appendChild(table);
+
+            // Display the substring from index 1 to 10
+            const DocNumber = document.getElementById('DocNumber');
+            DocNumber.textContent = "Document number (6-14): " + getText(inputText, 6, 14) + " --> " + checkDigitTd3(getText(inputText, 6, 14));
+
+            const Optional = document.getElementById('Optional');
+            Optional.textContent = "Optional (16-30): " + getText(inputText, 16, 30);
+
+            const dob = document.getElementById('dob');
+            dob.textContent = "Date of birth (1-6): " + getText(inputText2, 1, 6) + " --> " + checkDigitTd3(getText(inputText2, 1, 6));
+
+            const gender = document.getElementById('gender');
+            gender.textContent = "Gender (8): " + getTextAt(inputText2, 8);
+
+            const doe = document.getElementById('doe');
+            doe.textContent = "Expiration date (9-14): " + getText(inputText2, 9, 14) + " --> " + checkDigitTd3(getText(inputText2, 9, 14));
+
+            const Nationality = document.getElementById('Nationality');
+            Nationality.textContent = "Nationality (16-18): " + getText(inputText2, 16, 18);
+
+            const Optional2 = document.getElementById('Optional2');
+            Optional2.textContent = "Optional2 (19-29): " + getText(inputText2, 19, 29);
+
+            combine_title.textContent = "Check digit over digits 6–30 (upper line), 1–7, 9–15, 19–29 (middle line)";
+            const combine = document.getElementById('combine');
+            let text = getText(inputText, 6, 30) + "" + getText(inputText2, 1, 7) + "" + getText(inputText2, 9, 15) + getText(inputText2, 19, 29);
+            const cleanedText = text.replace(/</g, '');
+            combine.textContent = text + "    --> " + checkDigitTd3(text);
+            combine_clean.textContent = cleanedText + "    --> " + checkDigitTd3(cleanedText);
+
+            
+            console.log(checkDigitTd3(inputText, 6, 30))
+            console.log(checkDigitTd3(inputText2, 1, 7))
+            console.log(checkDigitTd3(inputText2, 9, 15))
+            console.log(checkDigitTd3(inputText2, 19, 29))
+            
+        }
+        
+        function clearInput() {
+            // Clear the input text
+            document.getElementById('inputText').value = '';
+            
+            // Hide the table
+            document.getElementById('tableContainer').innerHTML = '';
+        }
+
+        function getText(inputText, start, end) {
+            // Return the substring from start to end index
+            return inputText.substring(start - 1, end);
+        }
+
+        function getTextAt(inputText, index) {
+            return inputText.charAt(index - 1);
+        }
+
+        function charToNumber(c) {
+            if (c >= '0' && c <= '9') {
+                return c.charCodeAt(0) - '0'.charCodeAt(0);
+            } else if (c >= 'A' && c <= 'Z') {
+                return c.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+            } else {
+                return 0; // Assuming non-alphanumeric characters are treated as zero
+            }
+        }
+
+        function checkDigitTd3(text) {
+            const weights = [7, 3, 1];
+            let sum = 0;
+
+            // Iterate over each character in the string
+            for (let i = 0; i < text.length; i++) {
+                // Convert each character to its numeric value
+                //const digit = parseInt(text[i], 10);
+                const numericValue = charToNumber(text[i]);
+                
+                // Multiply the numeric value by the corresponding weight
+                sum += numericValue * weights[i % 3];
+            }
+
+            // Calculate the check digit as the remainder when sum is divided by 10
+            const checkDigit = sum % 10;
+
+            return checkDigit;
+        }
+    </script>
+</body>
+</html>
