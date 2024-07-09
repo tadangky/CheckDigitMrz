@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+            min-width: 20px;
+            padding: 5px;
+        }
+
+        .red-text {
+            color: red;
+        }
+
+        #inputText {
+            width: 420px; /* Adjust width as needed */
+            font-size: 14px; /* Set font size */
+        }
+    </style>
+</head>
+<body>
+    <h1>Character Table</h1>
+    <form>
+        <input type="text" id="inputText" placeholder="Enter text here">
+        <button type="button" onclick="generateTable()">Generate Table</button>
+        <button type="button" onclick="clearInput()">Clear</button>
+    </form>
+
+    <div id="tableContainer"></div>
+
+    <div id="PassportNumber"></div>
+    <div id="Nationality"></div>
+    <div id="dob"></div>
+    <div id="gender"></div>
+    <div id="doe"></div>
+    <div id="PersonalNumber"></div>
+    <div id="doe"></div>
+
+    <br/>
+    <div id="combine_title"></div>
+    <div id="combine"></div>
+
+    <script>
+        function generateTable() {
+            //A3536444<7ISL1212123<3103108121212<1239<<<68
+            //9991945493GBD9501016F2911272<<<<<<<<<<<<<<00
+            //E014944637VNM9510261F3403129036195000938<<46
+
+
+            // Get the input text
+            const inputText = document.getElementById('inputText').value;
+            //E014944637VNM9510261F3403129036195000938<<46
+            //const inputText = "E014944637VNM9510261F3403129036195000938<<46";
+            //const inputText = "A3536444<7ISL1212123<3103108121212<1239<<<68";
+
+            if (inputText.length !== 44) {
+                alert('Input must be exactly 44 characters long.');
+                return;
+            }
+            
+            // Get the table container
+            const tableContainer = document.getElementById('tableContainer');
+            
+            // Clear any previous table
+            tableContainer.innerHTML = '';
+            
+            // Create the table element
+            const table = document.createElement('table');
+            
+            // Create two rows
+            const row1 = document.createElement('tr');
+            const row2 = document.createElement('tr');
+            
+            // Iterate over the input text and create cells
+            for (let i = 0; i < inputText.length; i++) {
+                const cell1 = document.createElement('td');
+                const cell2 = document.createElement('td');
+                cell1.textContent = i + 1; // Number starting from 1
+                cell2.textContent = inputText[i]; // Corresponding character
+                row1.appendChild(cell1);
+                row2.appendChild(cell2);
+
+                if (i === 9 || i === 19 || i === 27 || i === 42 || i === 43) {
+                    cell2.classList.add('red-text'); // Apply red text color
+                }
+            }
+            
+            // Append rows to the table
+            table.appendChild(row1);
+            table.appendChild(row2);
+            
+            // Append table to the container
+            tableContainer.appendChild(table);
+
+            console.log(getText(inputText, 1, 9));
+            // Display the substring from index 1 to 10
+            const PassportNumber = document.getElementById('PassportNumber');
+            PassportNumber.textContent = "Passport number (1-9): " + getText(inputText, 1, 9) + " --> " + checkDigitTd3(getText(inputText, 1, 9));
+
+            const Nationality = document.getElementById('Nationality');
+            Nationality.textContent = "Nationality (11-13): " + getText(inputText, 11, 13);
+
+            const dob = document.getElementById('dob');
+            dob.textContent = "Date of birth (14-19): " + getText(inputText, 14, 19) + " --> " + checkDigitTd3(getText(inputText, 14, 19));
+
+            const gender = document.getElementById('gender');
+            gender.textContent = "Gender (21): " + getTextAt(inputText, 21);
+
+            const doe = document.getElementById('doe');
+            doe.textContent = "Expiration date (22-27): " + getText(inputText, 22, 27) + " --> " + checkDigitTd3(getText(inputText, 22, 27));
+
+            const PersonalNumber = document.getElementById('PersonalNumber');
+            PersonalNumber.textContent = "PersonalNumber (29-42): " + getText(inputText, 29, 42) + " --> " + checkDigitTd3(getText(inputText, 29, 42));
+
+            combine_title.textContent = "Check digit over digits 1–10, 14–20, and 22–43";
+            const combine = document.getElementById('combine');
+            let text = getText(inputText, 1, 10) + "" + getText(inputText, 14, 20) + "" + getText(inputText, 22, 43);
+            combine.textContent = text + "    --> " + checkDigitTd3(text);
+
+            console.log(checkDigitTd3(text));
+        }
+        
+        function clearInput() {
+            // Clear the input text
+            document.getElementById('inputText').value = '';
+            
+            // Hide the table
+            document.getElementById('tableContainer').innerHTML = '';
+        }
+
+        function getText(inputText, start, end) {
+            // Return the substring from start to end index
+            return inputText.substring(start - 1, end);
+        }
+
+        function getTextAt(inputText, index) {
+            return inputText.charAt(index - 1);
+        }
+
+        function charToNumber(c) {
+            if (c >= '0' && c <= '9') {
+                return c.charCodeAt(0) - '0'.charCodeAt(0);
+            } else if (c >= 'A' && c <= 'Z') {
+                return c.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+            } else {
+                return 0; // Assuming non-alphanumeric characters are treated as zero
+            }
+        }
+
+        function checkDigitTd3(text) {
+            const weights = [7, 3, 1];
+            let sum = 0;
+
+            // Iterate over each character in the string
+            for (let i = 0; i < text.length; i++) {
+                // Convert each character to its numeric value
+                //const digit = parseInt(text[i], 10);
+                const numericValue = charToNumber(text[i]);
+                
+                // Multiply the numeric value by the corresponding weight
+                sum += numericValue * weights[i % 3];
+            }
+
+            // Calculate the check digit as the remainder when sum is divided by 10
+            const checkDigit = sum % 10;
+
+            return checkDigit;
+        }
+    </script>
+</body>
+</html>
