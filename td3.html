@@ -49,8 +49,8 @@
             font-weight: bold;
             font-size: 20px;
         }
-		
-		.digit5 {
+        
+        .digit5 {
             color: red;
             font-weight: bold;
             font-size: 20px;
@@ -127,20 +127,20 @@
                 if (i === 9) {
                     cell2.classList.add('digit1'); 
                 }
-				
-				if (i === 19) {
+                
+                if (i === 19) {
                     cell2.classList.add('digit2'); 
                 }
-				
-				if (i === 27) {
+                
+                if (i === 27) {
                     cell2.classList.add('digit3');
                 }
-				
-				if (i === 42) {
+                
+                if (i === 42) {
                     cell2.classList.add('digit4');
                 }
-				
-				if (i === 43) {
+                
+                if (i === 43) {
                     cell2.classList.add('digit5');
                 }
             }
@@ -155,28 +155,28 @@
             console.log(getText(inputText, 1, 9));
             // Display the substring from index 1 to 10
             const PassportNumber = document.getElementById('PassportNumber');
-			PassportNumber.innerHTML = `Passport number (1-9): ${getText(inputText, 1, 9)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit1">${checkDigitTd3(getText(inputText, 1, 9))}</span>`;
+            PassportNumber.innerHTML = `Passport number (1-9): ${getText(inputText, 1, 9)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit1">${checkDigitTd3(getText(inputText, 1, 9))}</span>`;
 
             const Nationality = document.getElementById('Nationality');
             Nationality.textContent = "Nationality (11-13): " + getText(inputText, 11, 13);
 
             const dob = document.getElementById('dob');
-			dob.innerHTML = `Date of birth (14-19): ${getText(inputText, 14, 19)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit2">${checkDigitTd3(getText(inputText, 14, 19))}</span>`;
+            dob.innerHTML = `Date of birth (14-19): ${getText(inputText, 14, 19)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit2">${checkDigitTd3(getText(inputText, 14, 19))}</span>`;
 
             const gender = document.getElementById('gender');
             gender.textContent = "Gender (21): " + getTextAt(inputText, 21);
 
             const doe = document.getElementById('doe');
-			doe.innerHTML = `Expiration date (22-27): ${getText(inputText, 22, 27)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit3">${checkDigitTd3(getText(inputText, 22, 27))}</span>`;
+            doe.innerHTML = `Expiration date (22-27): ${getText(inputText, 22, 27)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit3">${checkDigitTd3(getText(inputText, 22, 27))}</span>`;
 
             const PersonalNumber = document.getElementById('PersonalNumber');
-			PersonalNumber.innerHTML = `PersonalNumber (29-42): ${getText(inputText, 29, 42)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit4">${checkDigitTd3(getText(inputText, 29, 42))}</span>`;
+            PersonalNumber.innerHTML = `PersonalNumber (29-42): ${getText(inputText, 29, 42)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit4">${checkDigitTd3(getText(inputText, 29, 42))}</span>`;
 
             combine_title.textContent = "Check digit over digits 1–10, 14–20, and 22–43";
             const combine = document.getElementById('combine');
             let text = getText(inputText, 1, 10) + "" + getText(inputText, 14, 20) + "" + getText(inputText, 22, 43);
             //combine.textContent = text + "    --> " + checkDigitTd3(text);
-			combine.innerHTML = `${text} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit5">${checkDigitTd3(text)}</span>`;
+            combine.innerHTML = `${text} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit5">${checkDigitTd3(text)}</span>`;
 
             console.log(checkDigitTd3(text));
         }
