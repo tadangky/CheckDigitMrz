@@ -25,30 +25,30 @@
             width: 420px; /* Adjust width as needed */
             font-size: 14px; /* Set font size */
         }
-		
-		.digit1 {
-			color: blue;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		
-		.digit2 {
-			color: orange;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		
-		.digit3 {
-			color: green;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		
-		.digit4 {
-			color: red;
-			font-weight: bold;
-			font-size: 20px;
-		}
+        
+        .digit1 {
+            color: blue;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit2 {
+            color: orange;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit3 {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit4 {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -60,26 +60,26 @@
         <button type="button" onclick="clearInput()">Clear</button>
     </form>
 
-	<div id="result">
-		<div id="tableContainer"></div>
-		<br/>
-		<div id="row1"></div>
-		<div id="DocNumber"></div>
-		<div id="Optional"></div>
-		<br/><br/>
-		<div id="row2"></div>
-		<div id="dob"></div>
-		<div id="gender"></div>
-		<div id="doe"></div>
-		<div id="Nationality"></div>
-		<div id="Optional2"></div>
+    <div id="result">
+        <div id="tableContainer"></div>
+        <br/>
+        <div id="row1"></div>
+        <div id="DocNumber"></div>
+        <div id="Optional"></div>
+        <br/><br/>
+        <div id="row2"></div>
+        <div id="dob"></div>
+        <div id="gender"></div>
+        <div id="doe"></div>
+        <div id="Nationality"></div>
+        <div id="Optional2"></div>
 
 
-		<br/>
-		<div id="combine_title"></div>
-		<div id="combine"></div>
-		<div id="combine_clean"></div>
-	</div>
+        <br/>
+        <div id="combine_title"></div>
+        <div id="combine"></div>
+        <div id="combine_clean"></div>
+    </div>
 
     <script>
         function generateTable() {
@@ -101,13 +101,13 @@
                 alert('Row 1 must be exactly 30 characters long. (current: ' + inputText.length + ')');
                 return;
             }
-			
-			if (inputText2.length !== 30) {
+            
+            if (inputText2.length !== 30) {
                 alert('Row 2 must be exactly 30 characters long. (current: ' + inputText2.length + ')');
                 return;
             }
-			
-			document.getElementById('result').style.display = 'block';
+            
+            document.getElementById('result').style.display = 'block';
             
             // Get the table container
             const tableContainer = document.getElementById('tableContainer');
@@ -137,16 +137,16 @@
 
                 if (i === 14) {
                     cell2.classList.add('digit1');
-					cell3.classList.add('digit3');
+                    cell3.classList.add('digit3');
                 }
 
                 if (i === 6) {
                     cell3.classList.add('digit2'); 
                 }
-				
-				if (i === 29) {
-					 cell3.classList.add('digit4'); 
-				}
+                
+                if (i === 29) {
+                     cell3.classList.add('digit4'); 
+                }
             }
             
             // Append rows to the table
@@ -156,18 +156,18 @@
             
             // Append table to the container
             tableContainer.appendChild(table);
-			
-			const row1Div = document.getElementById('row1');
-			row1Div.textContent = "Row 1";
+            
+            const row1Div = document.getElementById('row1');
+            row1Div.textContent = "Row 1";
 
             const DocNumber = document.getElementById('DocNumber');
-			DocNumber.innerHTML = `Document number (6-14): ${getText(inputText, 6, 14)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit1">${checkDigitTd3(getText(inputText, 6, 14))}</span>`;
+            DocNumber.innerHTML = `Document number (6-14): ${getText(inputText, 6, 14)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit1">${checkDigitTd3(getText(inputText, 6, 14))}</span>`;
 
             const Optional = document.getElementById('Optional');
             Optional.textContent = "Optional (16-30): " + getText(inputText, 16, 30);
 
-			const row2Div = document.getElementById('row2');
-			row2Div.textContent = "Row 2";
+            const row2Div = document.getElementById('row2');
+            row2Div.textContent = "Row 2";
 
             const dob = document.getElementById('dob');
             dob.innerHTML = `Date of birth (1-6): ${getText(inputText2, 1, 6)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit2">${checkDigitTd3(getText(inputText2, 1, 6))}</span>`;
@@ -176,7 +176,7 @@
             gender.textContent = "Gender (8): " + getTextAt(inputText2, 8);
 
             const doe = document.getElementById('doe');
-			doe.innerHTML = `Expiration date (9-14): ${getText(inputText2, 9, 14)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit3">${checkDigitTd3(getText(inputText2, 9, 14))}</span>`;
+            doe.innerHTML = `Expiration date (9-14): ${getText(inputText2, 9, 14)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit3">${checkDigitTd3(getText(inputText2, 9, 14))}</span>`;
 
             const Nationality = document.getElementById('Nationality');
             Nationality.textContent = "Nationality (16-18): " + getText(inputText2, 16, 18);
@@ -188,7 +188,7 @@
             const combine = document.getElementById('combine');
             let text = getText(inputText, 6, 30) + "" + getText(inputText2, 1, 7) + "" + getText(inputText2, 9, 15) + getText(inputText2, 19, 29);
             const cleanedText = text.replace(/</g, '');
-			combine.innerHTML = `${text} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit4">${checkDigitTd3(text)}</span>`;
+            combine.innerHTML = `${text} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit4">${checkDigitTd3(text)}</span>`;
             //combine_clean.textContent = cleanedText + "    &rarr; " + checkDigitTd3(cleanedText);
 
             
@@ -202,7 +202,7 @@
         function clearInput() {
             // Clear the input text
             document.getElementById('inputText').value = '';
-			document.getElementById('inputText2').value = '';
+            document.getElementById('inputText2').value = '';
             
             // Hide the table
             document.getElementById('result').style.display = 'none';
