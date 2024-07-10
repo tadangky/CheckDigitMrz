@@ -25,6 +25,36 @@
             width: 420px; /* Adjust width as needed */
             font-size: 14px; /* Set font size */
         }
+        
+        .digit1 {
+            color: blue;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit2 {
+            color: orange;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit3 {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .digit4 {
+            color: brown;
+            font-weight: bold;
+            font-size: 20px;
+        }
+		
+		.digit5 {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -35,19 +65,22 @@
         <button type="button" onclick="clearInput()">Clear</button>
     </form>
 
-    <div id="tableContainer"></div>
+    <div id="result">
+        <div id="tableContainer"></div>
 
-    <div id="PassportNumber"></div>
-    <div id="Nationality"></div>
-    <div id="dob"></div>
-    <div id="gender"></div>
-    <div id="doe"></div>
-    <div id="PersonalNumber"></div>
-    <div id="doe"></div>
+        <br/>
+        <div id="PassportNumber"></div>
+        <div id="Nationality"></div>
+        <div id="dob"></div>
+        <div id="gender"></div>
+        <div id="doe"></div>
+        <div id="PersonalNumber"></div>
+        <div id="doe"></div>
 
-    <br/>
-    <div id="combine_title"></div>
-    <div id="combine"></div>
+        <br/>
+        <div id="combine_title"></div>
+        <div id="combine"></div>
+    </div>
 
     <script>
         function generateTable() {
@@ -66,6 +99,8 @@
                 alert('Input must be exactly 44 characters long.');
                 return;
             }
+            
+            document.getElementById('result').style.display = 'block';
             
             // Get the table container
             const tableContainer = document.getElementById('tableContainer');
@@ -89,8 +124,24 @@
                 row1.appendChild(cell1);
                 row2.appendChild(cell2);
 
-                if (i === 9 || i === 19 || i === 27 || i === 42 || i === 43) {
-                    cell2.classList.add('red-text'); // Apply red text color
+                if (i === 9) {
+                    cell2.classList.add('digit1'); 
+                }
+				
+				if (i === 19) {
+                    cell2.classList.add('digit2'); 
+                }
+				
+				if (i === 27) {
+                    cell2.classList.add('digit3');
+                }
+				
+				if (i === 42) {
+                    cell2.classList.add('digit4');
+                }
+				
+				if (i === 43) {
+                    cell2.classList.add('digit5');
                 }
             }
             
@@ -104,27 +155,28 @@
             console.log(getText(inputText, 1, 9));
             // Display the substring from index 1 to 10
             const PassportNumber = document.getElementById('PassportNumber');
-            PassportNumber.textContent = "Passport number (1-9): " + getText(inputText, 1, 9) + " --> " + checkDigitTd3(getText(inputText, 1, 9));
+			PassportNumber.innerHTML = `Passport number (1-9): ${getText(inputText, 1, 9)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit1">${checkDigitTd3(getText(inputText, 1, 9))}</span>`;
 
             const Nationality = document.getElementById('Nationality');
             Nationality.textContent = "Nationality (11-13): " + getText(inputText, 11, 13);
 
             const dob = document.getElementById('dob');
-            dob.textContent = "Date of birth (14-19): " + getText(inputText, 14, 19) + " --> " + checkDigitTd3(getText(inputText, 14, 19));
+			dob.innerHTML = `Date of birth (14-19): ${getText(inputText, 14, 19)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit2">${checkDigitTd3(getText(inputText, 14, 19))}</span>`;
 
             const gender = document.getElementById('gender');
             gender.textContent = "Gender (21): " + getTextAt(inputText, 21);
 
             const doe = document.getElementById('doe');
-            doe.textContent = "Expiration date (22-27): " + getText(inputText, 22, 27) + " --> " + checkDigitTd3(getText(inputText, 22, 27));
+			doe.innerHTML = `Expiration date (22-27): ${getText(inputText, 22, 27)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit3">${checkDigitTd3(getText(inputText, 22, 27))}</span>`;
 
             const PersonalNumber = document.getElementById('PersonalNumber');
-            PersonalNumber.textContent = "PersonalNumber (29-42): " + getText(inputText, 29, 42) + " --> " + checkDigitTd3(getText(inputText, 29, 42));
+			PersonalNumber.innerHTML = `PersonalNumber (29-42): ${getText(inputText, 29, 42)} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit4">${checkDigitTd3(getText(inputText, 29, 42))}</span>`;
 
             combine_title.textContent = "Check digit over digits 1–10, 14–20, and 22–43";
             const combine = document.getElementById('combine');
             let text = getText(inputText, 1, 10) + "" + getText(inputText, 14, 20) + "" + getText(inputText, 22, 43);
-            combine.textContent = text + "    --> " + checkDigitTd3(text);
+            //combine.textContent = text + "    --> " + checkDigitTd3(text);
+			combine.innerHTML = `${text} &nbsp;&nbsp;&nbsp; &rarr; <span class="digit5">${checkDigitTd3(text)}</span>`;
 
             console.log(checkDigitTd3(text));
         }
@@ -134,7 +186,7 @@
             document.getElementById('inputText').value = '';
             
             // Hide the table
-            document.getElementById('tableContainer').innerHTML = '';
+            document.getElementById('result').style.display = 'none';
         }
 
         function getText(inputText, start, end) {
